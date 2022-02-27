@@ -15,7 +15,7 @@ class DevicePage extends StatefulWidget {
 }
 
 class _DevicePageState extends State<DevicePage> {
-  final key = key173;
+  final key = defaultkey;
   late List<int> token;
   final String password = '000000';
   late Stream<ConnectionStateUpdate> connectionStream;
