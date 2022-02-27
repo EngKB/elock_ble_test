@@ -4,6 +4,8 @@ import 'package:elock_ble/constants.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
+final iv = IV.fromLength(16);
+
 class ElockBleDataSource {
   final FlutterReactiveBle flutterReactiveBle = FlutterReactiveBle();
   getElockBleTokenCommand(
@@ -91,7 +93,6 @@ class ElockBleDataSource {
         mode: AESMode.ecb,
       ),
     );
-    final iv = IV.fromLength(16);
     return encrypter.encryptBytes(buffer, iv: iv).bytes;
   }
 
