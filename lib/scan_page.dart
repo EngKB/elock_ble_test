@@ -3,12 +3,11 @@ import 'dart:async';
 import 'package:elock_ble/constants.dart';
 import 'package:elock_ble/device_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_blue_elves/flutter_blue_elves.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
 class ScanPage extends StatefulWidget {
   const ScanPage({Key? key}) : super(key: key);
- 
+
   @override
   State<ScanPage> createState() => _ScanPageState();
 }
@@ -22,21 +21,16 @@ class _ScanPageState extends State<ScanPage> {
 
   @override
   void initState() {
-    FlutterBlueElves.instance.androidApplyBluetoothPermission(
-      (isOk) {
-        if (isOk) {
-          scanResult = flutterReactiveBle.scanForDevices(
-            withServices: [],
-          ).listen((event) {
-            if (!loResult.any((element) => element.id == event.id)) {
-              setState(() {
-                loResult.add(event);
-              });
-            }
-          });
-        }
-      },
-    );
+    scanResult = flutterReactiveBle.scanForDevices(
+      withServices: [],
+    ).listen((event) {
+      if (!loResult.any((element) => element.id == event.id)) {
+        setState(() {
+          loResult.add(event);
+        });
+      }
+    });
+
     super.initState();
   }
 
