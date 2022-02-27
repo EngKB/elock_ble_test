@@ -91,7 +91,7 @@ class ElockBleDataSource {
         mode: AESMode.ecb,
       ),
     );
-    final iv = IV.fromLength(16);
+    final iv = IV.fromLength(128);
     return encrypter.encryptBytes(buffer, iv: iv).bytes;
   }
 
@@ -102,12 +102,13 @@ class ElockBleDataSource {
         mode: AESMode.ecb,
       ),
     );
-    final iv = IV.fromLength(16);
+    final iv = IV.fromLength(128);
     return encrypter.decryptBytes(
-        Encrypted(
-          Uint8List.fromList(buffer),
-        ),
-        iv: iv);
+      Encrypted(
+        Uint8List.fromList(buffer),
+      ),
+      iv: iv,
+    );
   }
 
   List<int> _getElockPassword(String password) {
