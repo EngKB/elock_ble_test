@@ -75,51 +75,54 @@ class _DevicePageState extends State<DevicePage> {
           final DeviceConnectionState connectionState =
               snapshot.data!.connectionState;
           if (connectionState == DeviceConnectionState.connected) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('connected'),
-                ElevatedButton(
-                  onPressed: () {
-                    ElockBleDataSource().getElockBleTokenCommand(
-                      widget.deviceId,
-                      key,
-                    );
-                  },
-                  child: const Text('token'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    ElockBleDataSource().eLockBleTimeSynchronization(
-                      widget.deviceId,
-                      token,
-                      key,
-                    );
-                  },
-                  child: const Text('time'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    ElockBleDataSource().unlockElockBleCommand(
-                      widget.deviceId,
-                      token,
-                      key,
-                      password,
-                    );
-                  },
-                  child: const Text('unlock'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    ElockBleDataSource().checkElockBleStatusCommand(
-                      widget.deviceId,
-                      token,
-                      key,
-                    );
-                  },
-                  child: const Text('status'),
-                ),
-              ],
+            return Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('connected'),
+                  ElevatedButton(
+                    onPressed: () {
+                      ElockBleDataSource().getElockBleTokenCommand(
+                        widget.deviceId,
+                        key,
+                      );
+                    },
+                    child: const Text('token'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      ElockBleDataSource().eLockBleTimeSynchronization(
+                        widget.deviceId,
+                        token,
+                        key,
+                      );
+                    },
+                    child: const Text('time'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      ElockBleDataSource().unlockElockBleCommand(
+                        widget.deviceId,
+                        token,
+                        key,
+                        password,
+                      );
+                    },
+                    child: const Text('unlock'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      ElockBleDataSource().checkElockBleStatusCommand(
+                        widget.deviceId,
+                        token,
+                        key,
+                      );
+                    },
+                    child: const Text('status'),
+                  ),
+                ],
+              ),
             );
           } else if (connectionState == DeviceConnectionState.connecting) {
             return const Center(
