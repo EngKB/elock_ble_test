@@ -22,7 +22,7 @@ class _DevicePageState extends State<DevicePage> {
   final String password = '000000';
   late Stream<ConnectionStateUpdate> connectionStream;
   StreamSubscription<ConnectionStateUpdate>? _connection;
-
+  StreamSubscription? _dataStream;
   @override
   void initState() {
     connectionStream = FlutterReactiveBle().connectToDevice(
@@ -32,7 +32,7 @@ class _DevicePageState extends State<DevicePage> {
         }).asBroadcastStream();
     _connection = connectionStream.listen((event) {
       if (event.connectionState == DeviceConnectionState.connected) {
-        FlutterReactiveBle()
+        _dataStream = FlutterReactiveBle()
             .subscribeToCharacteristic(
           QualifiedCharacteristic(
             characteristicId: elockBleNotifyUuid,
@@ -42,10 +42,9 @@ class _DevicePageState extends State<DevicePage> {
         )
             .listen((event) {
           if (event.isNotEmpty) {
-            debugPrint('response ' + event.toString());
-
             final response =
                 ElockBleDataSource().decryptElockBleResponse(event, key);
+            debugPrint('response ' + event.toString());
             if (response[0] == 0x06 && response[1] == 0x02) {
               setState(() {
                 token = [
@@ -162,6 +161,7 @@ class _DevicePageState extends State<DevicePage> {
   @override
   void dispose() {
     _connection?.cancel();
+    _dataStream?.cancel();
     super.dispose();
   }
 }
