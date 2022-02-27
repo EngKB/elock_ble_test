@@ -6,6 +6,25 @@ final elockBleWriteUuid = Uuid.parse('36F5');
 
 final elockBleNotifyUuid = Uuid.parse('36F6');
 
+final List<int> defaultkey = [
+  0x3a,
+  0x60,
+  0x43,
+  0x2a,
+  0x5c,
+  0x01,
+  0x21,
+  0x1f,
+  0x29,
+  0x1e,
+  0x0f,
+  0x4e,
+  0x0c,
+  0x13,
+  0x28,
+  0x25
+];
+
 final List<int> key173 = [
   173,
   50,

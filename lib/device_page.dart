@@ -27,7 +27,6 @@ class _DevicePageState extends State<DevicePage> {
         servicesWithCharacteristicsToDiscover: {
           elockBleServiceUuid: [elockBleNotifyUuid, elockBleWriteUuid]
         }).asBroadcastStream();
-    super.initState();
     connectionStream.listen((event) {
       if (event.connectionState == DeviceConnectionState.connected) {
         FlutterReactiveBle()
@@ -57,8 +56,9 @@ class _DevicePageState extends State<DevicePage> {
         });
       }
     });
+    super.initState();
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
