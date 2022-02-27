@@ -88,10 +88,7 @@ class ElockBleDataSource {
 
   List<int> _encryptElockBleCommand(List<int> buffer, List<int> key) {
     final encrypter = Encrypter(
-      AES(
-        Key(Uint8List.fromList(key)),
-        mode: AESMode.ecb,
-      ),
+      AES(Key(Uint8List.fromList(key)), mode: AESMode.ecb, padding: null),
     );
     return encrypter.encryptBytes(buffer, iv: iv).bytes;
   }
@@ -101,6 +98,7 @@ class ElockBleDataSource {
       AES(
         Key(Uint8List.fromList(key)),
         mode: AESMode.ecb,
+        padding: null,
       ),
     );
     return encrypter.decryptBytes(
