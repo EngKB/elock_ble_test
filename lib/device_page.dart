@@ -39,9 +39,10 @@ class _DevicePageState extends State<DevicePage> {
         )
             .listen((event) {
           if (event.isNotEmpty) {
+            debugPrint('response ' + event.toString());
+
             final response =
                 ElockBleDataSource().decryptElockBleResponse(event, key);
-            debugPrint(response.toString());
             if (response[0] == 0x06 && response[1] == 0x02) {
               setState(() {
                 token = [
