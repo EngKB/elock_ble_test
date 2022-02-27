@@ -4,7 +4,7 @@ import 'package:elock_ble/constants.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
-final iv = IV.fromLength(128);
+final iv = IV.fromLength(16);
 
 class ElockBleDataSource {
   final FlutterReactiveBle flutterReactiveBle = FlutterReactiveBle();
@@ -127,9 +127,8 @@ class ElockBleDataSource {
     List<int> buffer,
     List<int> key,
   ) async {
-    buffer = _encryptElockBleCommand(buffer, key);
     buffer = buffer + List.generate(16 - buffer.length, (index) => 0);
-
+    buffer = _encryptElockBleCommand(buffer, key);
     print('length ' + buffer.length.toString());
     await flutterReactiveBle.writeCharacteristicWithoutResponse(
       QualifiedCharacteristic(
