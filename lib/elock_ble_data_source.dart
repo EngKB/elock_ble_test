@@ -122,8 +122,8 @@ class ElockBleDataSource {
     List<int> buffer,
     List<int> key,
   ) async {
-    buffer = _encryptElockBleCommand(buffer, key);
     buffer = buffer + List.generate(16 - buffer.length, (index) => 0);
+    buffer = _encryptElockBleCommand(buffer, key);
     print('length ' + buffer.length.toString());
     await flutterReactiveBle.writeCharacteristicWithoutResponse(
       QualifiedCharacteristic(
