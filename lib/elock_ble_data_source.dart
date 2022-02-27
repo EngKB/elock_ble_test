@@ -4,7 +4,7 @@ import 'package:elock_ble/constants.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 
-final iv = IV.fromLength(16);
+final iv = IV.fromLength(128);
 
 class ElockBleDataSource {
   final FlutterReactiveBle flutterReactiveBle = FlutterReactiveBle();
@@ -93,7 +93,7 @@ class ElockBleDataSource {
     return encrypter
         .encryptBytes(
           buffer,
-          // iv: iv,
+          iv: iv,
         )
         .bytes;
   }
@@ -110,7 +110,7 @@ class ElockBleDataSource {
       Encrypted(
         Uint8List.fromList(buffer),
       ),
-      // iv: iv,
+      iv: iv,
     );
   }
 
