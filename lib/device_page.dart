@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:elock_ble/constants.dart';
 import 'package:elock_ble/elock_ble_data_source.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,7 @@ class _DevicePageState extends State<DevicePage> {
   late List<int> token;
   final String password = '000000';
   late Stream<ConnectionStateUpdate> connectionStream;
+  StreamSubscription<ConnectionStateUpdate>? _connection;
 
   @override
   void initState() {
@@ -27,7 +30,7 @@ class _DevicePageState extends State<DevicePage> {
         servicesWithCharacteristicsToDiscover: {
           elockBleServiceUuid: [elockBleNotifyUuid, elockBleWriteUuid]
         }).asBroadcastStream();
-    connectionStream.listen((event) {
+    _connection = connectionStream.listen((event) {
       if (event.connectionState == DeviceConnectionState.connected) {
         FlutterReactiveBle()
             .subscribeToCharacteristic(
@@ -154,5 +157,11 @@ class _DevicePageState extends State<DevicePage> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _connection?.cancel();
+    super.dispose();
   }
 }
