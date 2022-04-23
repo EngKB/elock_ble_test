@@ -142,6 +142,23 @@ class ElockBleDataSource {
       key,
     );
     }
+  void getElockExternalPowerPercentage(String deviceId,
+    List<int> token,
+    List<int> key)
+    {
+      List<int> buffer = [
+          0x02,
+          0x01,
+          0x01,
+          0x02,
+        ] +
+        token;
+    _sendElockBleCommand(
+      deviceId,
+      buffer,
+      key,
+    );
+    }
   void _sendElockBleCommand(
     final String deviceId,
     List<int> buffer,
