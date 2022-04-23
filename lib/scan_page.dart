@@ -30,7 +30,6 @@ class _ScanPageState extends State<ScanPage> {
         });
       }
     });
-
     super.initState();
   }
 

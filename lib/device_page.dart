@@ -23,6 +23,7 @@ class _DevicePageState extends State<DevicePage> {
   late Stream<ConnectionStateUpdate> connectionStream;
   StreamSubscription<ConnectionStateUpdate>? _connection;
   StreamSubscription? _dataStream;
+  int? batteryLevel;
   @override
   void initState() {
     connectionStream = FlutterReactiveBle().connectToDevice(
@@ -53,6 +54,13 @@ class _DevicePageState extends State<DevicePage> {
                   response[5],
                   response[6],
                 ];
+              });
+            }
+            if (response[0] == 0x02 &&
+                response[1] == 0x02 &&
+                response[2] == 0x01) {
+              setState(() {
+                batteryLevel = response[3];
               });
             }
           }
@@ -104,6 +112,16 @@ class _DevicePageState extends State<DevicePage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      ElockBleDataSource().getElockPowerPercentage(
+                        widget.deviceId,
+                        token,
+                        key,
+                      );
+                    },
+                    child: const Text('battery'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
                       ElockBleDataSource().unlockElockBleCommand(
                         widget.deviceId,
                         token,
@@ -123,6 +141,7 @@ class _DevicePageState extends State<DevicePage> {
                     },
                     child: const Text('status'),
                   ),
+                  if (batteryLevel != null) Text(batteryLevel.toString())
                 ],
               ),
             );
